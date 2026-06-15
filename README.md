@@ -1,56 +1,89 @@
-# Welcome to your Expo app 👋
+# WRD - Wardrobe Digital (Frontend) 👗👖
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to the frontend application for **WRD**, a universal mobile and web wardrobe management platform built using Expo and React Native.
 
-## Get started
+This codebase is a clean, optimized, and backend-ready repository separated from the design mockup HTML templates.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Project Architecture
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+WRD_Frontend/
+├── assets/              # App images, logos, and static assets
+├── constants/           # Styling theme (theme.ts) and static data fallback (data.ts)
+├── src/
+│   ├── app/             # File-based routing (Expo Router)
+│   │   ├── (tabs)/      # Bottom tab navigation (Dashboard, Closet, boards, style planner)
+│   │   ├── _layout.tsx  # Root navigation layout
+│   │   ├── profile.tsx  # User profile screen
+│   │   ├── thari-ai.tsx # Tinder-style swipe outfit builder
+│   │   └── outfit-builder.tsx # Interactive canvas builder
+│   └── services/
+│       └── api.ts       # Unified API client layer with local mock fallback
+├── .env.example         # Template for environment configuration
+├── tsconfig.json        # TypeScript configuration
+└── package.json         # Project dependencies & scripts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## ⚡ Integration with Backend
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+The application is structured to dynamically integrate with a backend API using the client service layer in `src/services/api.ts`.
 
-## Learn more
+### How it works:
+1. If the environment variable `EXPO_PUBLIC_API_URL` is set, the app will make HTTP requests to the backend endpoints (e.g. `GET /closet-items`, `GET /profile`).
+2. If `EXPO_PUBLIC_API_URL` is not set or the backend requests fail, the application gracefully falls back to the rich static mock data in `constants/data.ts` to keep the UI fully functional.
 
-To learn more about developing your project with Expo, look at the following resources:
+### Configuration:
+1. Copy the environment variables template:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open `.env` and set `EXPO_PUBLIC_API_URL` to your backend's API endpoint:
+   ```env
+   EXPO_PUBLIC_API_URL=http://localhost:3000/api
+   ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🚀 Getting Started
 
-Join our community of developers creating universal apps.
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 2. Start the Application
+To run the server locally:
+```bash
+npx expo start
+```
+
+Press key shortcuts in your terminal to open on different platforms:
+- **`w`** to open in the **Web Browser**
+- **`a`** to open in an **Android Emulator**
+- **`i`** to open in an **iOS Simulator** (macOS only)
+
+---
+
+## 📤 Push to GitHub
+
+To push only this optimized frontend code to a new standalone GitHub repository:
+
+1. Initialize a new git repository in the `WRD_Frontend` directory (if not already done):
+   ```bash
+   git init
+   ```
+2. Add your files and commit:
+   ```bash
+   git add .
+   git commit -m "Initial commit of optimized WRD frontend"
+   ```
+3. Link the repository to your remote GitHub repo and push:
+   ```bash
+   git remote add origin https://github.com/your-username/your-repo-name.git
+   git branch -M main
+   git push -u origin main
+   ```
