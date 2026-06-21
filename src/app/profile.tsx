@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,18 @@ import {
   ScrollView,
   Image,
   Pressable,
+  Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, BorderRadius } from '../../constants/theme';
-import { useState, useEffect } from 'react';
 import { apiService } from '../services/api';
 import { userProfile as initialProfile } from '../../constants/data';
+import { useAuth } from '../context/AuthContext';
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const { logout } = useAuth();
   const [profile, setProfile] = useState(initialProfile);
 
   useEffect(() => {
@@ -118,6 +120,21 @@ export default function ProfileScreen() {
             <MaterialIcons name="chevron-right" size={24} color={Colors.outline} />
           </Pressable>
         </View>
+
+        {/* Sign Out Button */}
+        <Pressable
+          style={({ pressed }) => [styles.logoutButton, pressed && styles.logoutButtonPressed]}
+          onPress={() =>
+            Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Sign Out', style: 'destructive', onPress: () => logout() },
+            ])
+          }
+          accessibilityLabel="Sign out"
+        >
+          <MaterialIcons name="logout" size={20} color={Colors.error} />
+          <Text style={styles.logoutButtonText}>Sign Out</Text>
+        </Pressable>
 
         {/* Brand/Placeholder details */}
         <View style={styles.brandDetails}>
@@ -271,6 +288,27 @@ const styles = StyleSheet.create({
     ...Typography.bodySm,
     fontFamily: 'Manrope-SemiBold',
     color: Colors.onBackground,
+  },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    borderWidth: 1,
+    borderColor: Colors.errorContainer,
+    borderRadius: BorderRadius.xl,
+    paddingVertical: 14,
+    backgroundColor: '#FFF5F5',
+    width: '100%',
+    marginBottom: Spacing.stackMd,
+  },
+  logoutButtonPressed: {
+    opacity: 0.7,
+  },
+  logoutButtonText: {
+    fontFamily: 'Manrope-Bold',
+    fontSize: 15,
+    color: Colors.error,
   },
   brandDetails: {
     alignItems: 'center',

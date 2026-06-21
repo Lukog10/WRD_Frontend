@@ -43,3 +43,6 @@ example
 # generated native folders
 /ios
 /android
+
+# Design mockups (local only)
+stitch_myown_ai/
